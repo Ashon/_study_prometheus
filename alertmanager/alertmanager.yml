@@ -1,0 +1,15 @@
+global:
+
+route:
+  receiver: webhook-api
+  group_by: 
+    - alertname
+  group_wait: 15s
+  group_interval: 15s
+  repeat_interval: 1m
+
+receivers:
+  - name: webhook-api
+    webhook_configs:
+      - url: http://alertproxy:5000/alert/prometheus
+        send_resolved: true
