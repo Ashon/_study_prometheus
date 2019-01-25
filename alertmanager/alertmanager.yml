@@ -11,5 +11,5 @@ route:
 receivers:
   - name: webhook-api
     webhook_configs:
-      - url: http://alertproxy:5000/alert/prometheus
+      - url: http://alertreceiver:5000/alert/prometheus
         send_resolved: true
