@@ -5,6 +5,10 @@ services:
     image: google/cadvisor
     hostname: cadvisor
     privileged: true
+    network_mode: host
+    command:
+      - --docker_only
+      - --enable_load_reader=true
     ports:
       - 8080:8080
     volumes:
@@ -42,7 +46,8 @@ services:
       - --storage.tsdb.path=/var/lib/prometheus/data
     links:
       - alertmanager:alertmanager
-      - cadvisor:cadvisor
+    extra_hosts:
+      - cadvisor:172.18.0.1
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus/prometheus.rules:/etc/prometheus/prometheus.rules

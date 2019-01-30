@@ -1,11 +1,11 @@
 groups:
-- name: RabbitMQ Alerts
+- name: Conatiner Alerts
   rules:
-  - alert: Messages are not consumed
-    expr: rabbitmq_queue_messages_ready_total > 0
+  - alert: container.cpu.high
+    expr: sum(rate(container_cpu_usage_seconds_total{image!=""}[1m])) by (name) > 0.8
     for: 1m
     labels:
       severity: warning
     annotations:
-      summary: "{{ $labels.job }} Region Messages are not consumed [ready_msgs={{ $value }}]"
-      description: "{{ $labels.job }} Region Messages are not consumed for 3 minutes."
+      summary: "{{ $labels.name }} container cpu usage is high"
+      description: "{{ $labels.name }} container cpu usage is high for 1 minutes. [usage={{ $value }}]"
